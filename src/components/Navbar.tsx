@@ -21,9 +21,12 @@ export function Navbar() {
   const active = useActiveSection(links.map((l) => l.id));
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
+    // Check initial scroll position immediately on mount / page refresh
+    const checkScroll = () => setScrolled(window.scrollY > 10);
+    checkScroll();
+
+    window.addEventListener("scroll", checkScroll, { passive: true });
+    return () => window.removeEventListener("scroll", checkScroll);
   }, []);
 
   const handleScrollTo = (e: MouseEvent<HTMLAnchorElement>, targetId: string) => {
@@ -44,8 +47,10 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 z-50 w-full transition-all ${
-        scrolled ? "bg-background/70 backdrop-blur-xl border-b border-border" : "bg-transparent"
+      className={`fixed top-0 z-50 w-full transition-all duration-300 ${
+        scrolled
+          ? "bg-background/80 backdrop-blur-xl border-b border-border shadow-sm shadow-black/5"
+          : "bg-transparent"
       }`}
     >
       <nav className="mx-auto flex max-w-[1200px] items-center justify-between px-6 py-4">
