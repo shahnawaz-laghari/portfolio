@@ -42,7 +42,11 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       <div className="mt-10 grid gap-6 md:grid-cols-2">
         {(project.platform === "Android" ? project.images.slice(0, 2) : project.images).map((img, i) => (
           <div key={i} className="flex justify-center">
-            <PhoneFrame src={img} alt={`${project.title} screenshot ${i + 1}`} />
+            <PhoneFrame
+              src={img}
+              alt={`${project.title} screenshot ${i + 1}`}
+              variant={project.slug === "aura" ? "aura" : project.slug === "seatnix" ? "seatnix" : "default"}
+            />
           </div>
         ))}
       </div>

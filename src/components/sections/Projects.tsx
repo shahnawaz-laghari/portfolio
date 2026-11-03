@@ -8,8 +8,10 @@ export function Projects() {
     <section id="projects" className="py-24">
       <div className="mx-auto max-w-[1200px] px-6">
         <div className="mb-10">
-          <h2 className="font-heading text-3xl font-bold md:text-4xl">Android Projects</h2>
-          <p className="mt-2 text-muted-foreground">
+          <h2 className="font-heading text-5xl font-bold tracking-tight text-white md:text-6xl">
+            Android Projects
+          </h2>
+          <p className="mt-3 max-w-2xl text-lg text-zinc-400">
             A selection of mobile apps I have designed and built with Flutter &amp; Android.
           </p>
         </div>

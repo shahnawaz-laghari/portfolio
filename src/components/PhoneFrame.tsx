@@ -1,45 +1,108 @@
-import Image from "next/image";
+"use client";
 
-// Sleek modern Android frame inspired by the uploaded mockup:
-// Slim uniform bezel, rounded corners, centered punch-hole camera lens, and subtle screen reflection.
+import Image from "next/image";
+import { motion } from "motion/react";
+import { BusFront, Flame } from "lucide-react";
+
 export function PhoneFrame({
   src,
   alt,
   className = "",
+  variant = "default",
 }: {
-  src: string;
-  alt: string;
+  src?: string;
+  alt?: string;
   className?: string;
+  variant?: "aura" | "seatnix" | "default";
 }) {
+  const isAura = variant === "aura";
+  const isSeatnix = variant === "seatnix";
+
   return (
-    <div
-      className={`relative mx-auto aspect-[9/19.5] w-[230px] rounded-[3rem] bg-gradient-to-b from-neutral-800 via-neutral-900 to-neutral-950 p-[3.5px] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.7),0_0_20px_rgba(255,255,255,0.05)] ring-1 ring-white/15 ${className}`}
+    <motion.div
+      animate={{ y: [0, -12, 0] }}
+      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+      className={`relative h-[480px] w-[240px] overflow-hidden rounded-[2.9rem] border border-white/15 bg-neutral-950 p-2.5 shadow-2xl ${className}`}
     >
-      {/* Outer subtle bezel border */}
-      <div className="relative h-full w-full overflow-hidden rounded-[2.8rem] bg-black p-[5px]">
-        {/* Screen container */}
-        <div className="relative h-full w-full overflow-hidden rounded-[2.5rem] bg-zinc-950">
-          <Image
-            src={src}
-            alt={alt}
-            fill
-            unoptimized
-            className="object-cover"
-            sizes="230px"
-          />
-
-          {/* Centered punch-hole selfie camera */}
-          <div className="absolute left-1/2 top-3 z-30 flex h-3.5 w-3.5 -translate-x-1/2 items-center justify-center rounded-full bg-black ring-1 ring-neutral-800/80">
-            {/* Camera lens reflection */}
-            <div className="h-1.5 w-1.5 rounded-full bg-neutral-900 ring-1 ring-blue-950/40" />
+      {/* side buttons */}
+      <span className="absolute -right-[3px] top-28 h-8 w-[3px] rounded-r bg-zinc-700" />
+      <span className="absolute -left-[3px] top-32 h-12 w-[3px] rounded-l bg-zinc-700" />
+      
+      <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-[2.2rem] bg-[#171310]">
+        {isAura && (
+          <div className="flex h-full w-full flex-col items-center justify-center bg-[radial-gradient(circle_at_center,rgba(234,122,61,0.16),transparent_28%),linear-gradient(180deg,#1a130f_0%,#0d0d12_42%,#080b10_100%)]">
+            <div className="relative">
+              {/* glow behind the logo ring */}
+              <div className="absolute left-1/2 top-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#e78a4e]/25 blur-3xl" />
+              <motion.div
+                animate={{ scale: [1, 1.04, 1], opacity: [0.85, 1, 0.85] }}
+                transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
+                className="relative flex h-24 w-24 items-center justify-center rounded-full border-[3px] border-[#e78a4e] shadow-[0_0_18px_rgba(231,138,78,0.45),0_0_45px_rgba(231,138,78,0.28)]"
+              >
+                <Flame
+                  className="h-11 w-11 fill-[#e78a4e] text-[#e78a4e]"
+                  style={{ filter: "drop-shadow(0 0 10px rgba(231,138,78,0.55))" }}
+                />
+              </motion.div>
+            </div>
+            <div className="w-full px-5 text-center">
+              <div className="text-[2.5rem] font-bold leading-tight tracking-tight text-white">
+                aura
+              </div>
+              <div className="mt-3 text-[11px] font-semibold uppercase leading-relaxed tracking-[0.3em] text-zinc-400">
+                Move with intention
+              </div>
+            </div>
+            <div className="sheen pointer-events-none absolute inset-0" />
           </div>
+        )}
 
-          {/* Soft diagonal screen light sheen / glass reflection */}
-          <div className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-tr from-transparent via-transparent to-white/[0.07]" />
-          <div className="sheen pointer-events-none absolute inset-0 z-20" />
-        </div>
+        {isSeatnix && (
+          <div className="flex h-full w-full flex-col items-center justify-center bg-[radial-gradient(circle_at_center,rgba(93,110,255,0.15),transparent_28%),linear-gradient(180deg,#171b27_0%,#0a0d12_45%,#090b10_100%)]">
+            <div className="relative">
+              <div className="absolute left-1/2 top-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#5d6eff]/20 blur-3xl" />
+              <motion.div
+                animate={{ scale: [1, 1.04, 1], opacity: [0.85, 1, 0.85] }}
+                transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
+                className="relative flex h-24 w-24 items-center justify-center rounded-full border-[3px] border-[#5d6eff] bg-[#0a49c1] shadow-[0_0_18px_rgba(93,110,255,0.45),0_0_45px_rgba(93,110,255,0.28)]"
+              >
+                <BusFront
+                  className="h-11 w-11 text-white"
+                  style={{ filter: "drop-shadow(0 0 10px rgba(255,255,255,0.4))" }}
+                />
+              </motion.div>
+            </div>
+            <div className="w-full px-5 text-center">
+              <div className="text-[2.5rem] font-bold leading-tight tracking-tight text-white">
+                Seatnix
+              </div>
+              <div className="mt-3 text-[11px] font-semibold uppercase leading-relaxed tracking-[0.3em] text-zinc-400">
+                Book your seat
+              </div>
+            </div>
+            <div className="sheen pointer-events-none absolute inset-0" />
+          </div>
+        )}
+
+        {!isAura && !isSeatnix && (
+          <div className="flex h-full w-full items-center justify-center bg-gradient-to-b from-zinc-900 to-black">
+            {src ? (
+              <div className="relative h-full w-full">
+                <Image src={src} alt={alt ?? "Project preview"} fill unoptimized className="object-cover" sizes="240px" />
+              </div>
+            ) : (
+              <div className="flex h-full w-full items-center justify-center bg-zinc-800 text-zinc-500">
+                No preview
+              </div>
+            )}
+            <div className="sheen pointer-events-none absolute inset-0" />
+          </div>
+        )}
+
+        {/* punch-hole camera */}
+        <span className="absolute left-1/2 top-3 z-10 h-3 w-3 -translate-x-1/2 rounded-full bg-black ring-1 ring-zinc-700" />
       </div>
-    </div>
+    </motion.div>
   );
 }
 
