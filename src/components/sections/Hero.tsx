@@ -89,7 +89,7 @@ export function Hero() {
               <div className="sheen pointer-events-none absolute inset-0" />
             </div>
             {/* punch-hole camera */}
-            <span className="absolute left-1/2 top-3 z-10 h-3 w-3 -translate-x-1/2 rounded-full bg-black ring-1 ring-zinc-700" />
+            <span className="absolute left-1/2 top-5 z-10 h-3 w-3 -translate-x-1/2 rounded-full bg-black ring-1 ring-zinc-700" />
           </motion.div>
         </motion.div>
       </div>
