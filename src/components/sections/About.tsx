@@ -15,7 +15,7 @@ export function About() {
           variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.12 } } }}
           className="grid gap-12 md:grid-cols-2 md:items-center"
         >
-          <motion.div variants={fadeUp} className="flex justify-center">
+          <motion.div variants={fadeUp} className="flex justify-center md:justify-start">
             <motion.div
               whileHover={{ rotateX: 4, rotateY: -4 }}
               style={{ perspective: 1000, transformStyle: "preserve-3d" }}
