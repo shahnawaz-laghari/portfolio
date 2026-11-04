@@ -1,7 +1,7 @@
 // TODO: replace email/social links, location, and stat numbers with real values.
 export const profile = {
   name: "Shah Nawaz Ahmed",
-  title: "Junior Android & Frontend Developer",
+  title: "Junior Android App & Frontend Developer",
   location: "Open to internships, junior roles & freelance work · Remote friendly",
   email: "shahnawazahmedlaghari@gmail.com",
   github: "https://github.com/shahnawaz-laghari",
