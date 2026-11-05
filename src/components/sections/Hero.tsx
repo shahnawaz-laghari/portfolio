@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { motion } from "motion/react";
-import { ArrowDown, Download } from "lucide-react";
+import { Download } from "lucide-react";
 import { profile } from "@/data/profile";
 import { Button } from "@/components/ui/button";
 import { PhoneFrame } from "@/components/PhoneFrame";
@@ -56,12 +56,6 @@ export function Hero() {
         >
           <PhoneFrame variant="aura" alt="Aura app splash screen" />
         </motion.div>
-      </div>
-
-      <div className="mt-12 flex justify-center">
-        <Link href="#about" aria-label="Scroll down">
-          <ArrowDown className="h-5 w-5 text-muted-foreground transition-colors hover:text-foreground" />
-        </Link>
       </div>
     </section>
   );

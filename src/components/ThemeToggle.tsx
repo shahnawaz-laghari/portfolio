@@ -6,22 +6,28 @@ import { Button } from "@/components/ui/button";
 
 export function ThemeToggle() {
   const { setTheme, resolvedTheme } = useTheme();
+  // Prevent hydration mismatch: render a stable placeholder before mount.
   const mounted = useSyncExternalStore(
     () => () => {},
     () => true,
     () => false
   );
   if (!mounted) return <Button variant="ghost" size="icon" aria-label="Toggle theme" />;
-  // Use resolvedTheme: "system" must resolve to its actual color for a correct toggle.
+
+  // On first visit the site follows the user's system theme (next-themes
+  // "system" default). This toggle only offers Light / Dark.
   const isDark = resolvedTheme === "dark";
+  const label = isDark ? "Switch to light theme" : "Switch to dark theme";
+
   return (
     <Button
       variant="ghost"
       size="icon"
-      aria-label="Toggle theme"
+      aria-label={label}
+      title={label}
       onClick={() => setTheme(isDark ? "light" : "dark")}
     >
-      {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+      {isDark ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
     </Button>
   );
 }
