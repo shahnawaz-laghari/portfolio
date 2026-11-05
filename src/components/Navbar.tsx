@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useState, MouseEvent } from "react";
+import { useEffect, useMemo, useState, MouseEvent } from "react";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -18,7 +18,8 @@ const links = [
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const active = useActiveSection(links.map((l) => l.id));
+  const sectionIds = useMemo(() => links.map((l) => l.id), []);
+  const active = useActiveSection(sectionIds);
 
   useEffect(() => {
     // Check initial scroll position immediately on mount / page refresh
@@ -36,11 +37,11 @@ export function Navbar() {
 
     if (window.__lenis) {
       window.__lenis.scrollTo(element, {
-        offset: -20,
+        offset: -84,
         duration: 1.4,
       });
     } else {
-      const top = element.getBoundingClientRect().top + window.scrollY - 20;
+      const top = element.getBoundingClientRect().top + window.scrollY - 84;
       window.scrollTo({ top, behavior: "smooth" });
     }
   };

@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Geist, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { LenisProvider } from "@/components/LenisProvider";
@@ -9,18 +9,76 @@ import { Toaster } from "@/components/ui/sonner";
 import { profile } from "@/data/profile";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 const spaceGrotesk = Space_Grotesk({ variable: "--font-space-grotesk", subsets: ["latin"] });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com";
+const defaultTitle = `${profile.name} — ${profile.title}`;
+
 export const metadata: Metadata = {
-  title: `${profile.name} — ${profile.title}`,
-  description: profile.bio,
-  openGraph: {
-    title: `${profile.name} — ${profile.title}`,
-    description: profile.bio,
-    type: "website",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: defaultTitle,
+    template: `%s — ${profile.name}`,
   },
-  twitter: { card: "summary_large_image" },
+  description: profile.bio,
+  keywords: [
+    "Android developer",
+    "Flutter developer",
+    "Next.js developer",
+    "React developer",
+    "Frontend developer",
+    "Junior developer portfolio",
+    profile.name,
+  ],
+  authors: [{ name: profile.name, url: profile.github }],
+  creator: profile.name,
+  openGraph: {
+    title: defaultTitle,
+    description: profile.bio,
+    url: siteUrl,
+    siteName: profile.name,
+    type: "website",
+    locale: "en_US",
+    images: [
+      {
+        url: profile.avatar,
+        width: 512,
+        height: 512,
+        alt: `Portrait of ${profile.name}`,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary",
+    title: defaultTitle,
+    description: profile.bio,
+    images: [profile.avatar],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large" },
+  },
+  alternates: { canonical: "/" },
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#fafafa" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0f" },
+  ],
+};
+
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: profile.name,
+  jobTitle: profile.title,
+  description: profile.bio,
+  email: `mailto:${profile.email}`,
+  url: siteUrl,
+  image: `${siteUrl}${profile.avatar}`,
+  sameAs: [profile.github, profile.linkedin],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -28,7 +86,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} antialiased`}
+      className={`${geistSans.variable} ${spaceGrotesk.variable} antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <ThemeProvider>
@@ -39,6 +97,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Toaster />
           </LenisProvider>
         </ThemeProvider>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
       </body>
     </html>
   );

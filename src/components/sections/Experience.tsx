@@ -4,7 +4,7 @@ import { experiences } from "@/data/experience";
 
 export function Experience() {
   return (
-    <section id="experience" className="py-24">
+    <section id="experience" className="scroll-mt-24 py-24">
       <div className="mx-auto max-w-[1200px] px-6">
         <h2 className="font-heading text-3xl font-bold md:text-4xl">My journey</h2>
         <p className="mt-2 text-muted-foreground">

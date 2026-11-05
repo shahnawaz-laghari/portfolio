@@ -55,7 +55,7 @@ export function Contact() {
   return (
     <section id="contact" className="scroll-mt-24 py-24">
       <div className="mx-auto max-w-[1200px] px-6">
-        <div className="grid gap-10 md:grid-cols-2 md:items-stretch">
+        <div className="grid gap-10 lg:grid-cols-2 lg:items-stretch">
           {/* Left column: Text, Email, Socials distributed to match form height */}
           <div className="flex flex-col justify-between py-2 sm:py-4">
             <div>
@@ -67,7 +67,7 @@ export function Contact() {
               </p>
             </div>
 
-            <div className="space-y-4 pt-6 md:pt-0">
+            <div className="space-y-4 pt-6 lg:pt-0">
               <a
                 href={`mailto:${profile.email}`}
                 className="group inline-flex items-center gap-3.5 text-base font-medium text-foreground transition-colors hover:text-primary sm:text-lg"
