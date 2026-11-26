@@ -22,8 +22,6 @@ All content lives in `src/data/`:
 - `skills.ts` — skill groups (also feeds the marquee)
 - `experience.ts` — timeline entries
 
-Theme colors are CSS variables in `src/app/globals.css`. The two Lottie animations live in
-`public/lottie/` (`hero-pulse.json` and `success-check.json`).
 
 ## Environment variables
 
