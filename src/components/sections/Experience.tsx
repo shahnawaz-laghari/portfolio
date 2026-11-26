@@ -4,13 +4,22 @@ import { experiences } from "@/data/experience";
 
 export function Experience() {
   return (
-    <section id="experience" className="scroll-mt-24 py-24">
+    <section id="experience" className="scroll-mt-24">
       <div className="mx-auto max-w-[1200px] px-6">
-        <h2 className="font-heading text-3xl font-bold md:text-4xl">My journey</h2>
-        <p className="mt-2 text-muted-foreground">
-          How I went from fundamentals to building real apps.
+        <h2 className="mt-2 font-heading text-3xl font-semibold tracking-tight">Experience</h2>
+        <p className="mt-2 text-sm text-muted-foreground">
+          From fundamentals to shipping apps.
         </p>
-        <div className="relative mt-10 ml-4 border-l border-border pl-8">
+        <div className="relative mt-10 ml-4 pl-8">
+          <motion.span
+            aria-hidden="true"
+            initial={{ scaleY: 0 }}
+            whileInView={{ scaleY: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.1, ease: "easeOut" }}
+            style={{ originY: 0 }}
+            className="absolute left-0 top-0 h-full w-px bg-primary/40"
+          />
           {experiences.map((e, i) => (
             <motion.div
               key={e.title}

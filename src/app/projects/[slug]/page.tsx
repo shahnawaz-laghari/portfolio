@@ -2,6 +2,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { projects } from "@/data/projects";
 import { PhoneFrame } from "@/components/PhoneFrame";
+import { SeatNixDemo } from "@/components/SeatNixDemo";
+import { AuraDemo } from "@/components/AuraDemo";
+import { PresenceDemo } from "@/components/PresenceDemo";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
@@ -28,40 +31,50 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       <Link href="/#projects" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground">
         <ArrowLeft className="h-4 w-4" /> Back to projects
       </Link>
-      <h1 className="mt-6 font-heading text-4xl font-bold md:text-5xl">{project.title}</h1>
-      <p className="mt-2 text-lg text-muted-foreground">{project.tagline}</p>
+      <h1 className="mt-6 font-heading text-3xl font-semibold tracking-tight md:text-4xl">
+        {project.title}
+      </h1>
+      <p className="mt-2 text-sm text-muted-foreground">{project.tagline}</p>
 
       <div className="mt-8 flex flex-wrap gap-2">
         {project.tech.map((t) => (
-          <span key={t} className="rounded-full bg-muted px-3 py-1 text-sm">
+          <span key={t} className="rounded-full bg-muted px-2.5 py-1 text-xs text-muted-foreground">
             {t}
           </span>
         ))}
       </div>
 
-      <div className="mt-10 grid gap-6 md:grid-cols-2">
-        {(project.platform === "Android" ? project.images.slice(0, 2) : project.images).map((img, i) => (
-          <div key={i} className="flex justify-center">
-            <PhoneFrame
-              src={img}
-              alt={`${project.title} screenshot ${i + 1}`}
-              variant={project.slug === "aura" ? "aura" : project.slug === "seatnix" ? "seatnix" : "default"}
-            />
-          </div>
-        ))}
-      </div>
+      {project.slug === "seatnix" ? (
+        <SeatNixDemo />
+      ) : project.slug === "aura" ? (
+        <AuraDemo />
+      ) : project.slug === "presence" ? (
+        <PresenceDemo />
+      ) : (
+        <div className="mt-10 grid gap-6 md:grid-cols-2">
+          {project.images.map((img, i) => (
+            <div key={`${img}-${i}`} className="flex justify-center">
+              <PhoneFrame
+                src={img}
+                alt={`${project.title} screenshot ${i + 1}`}
+                fit="contain"
+              />
+            </div>
+          ))}
+        </div>
+      )}
 
-      <div className="mt-12 grid gap-8 md:grid-cols-2">
-        <div>
-          <h2 className="font-heading text-2xl font-semibold">Overview</h2>
+      <div className="mt-12 grid gap-6 md:grid-cols-2">
+        <div className="surface p-6">
+          <h2 className="font-heading text-xl font-semibold">Overview</h2>
           <p className="mt-2 text-muted-foreground">{project.description}</p>
-          <h2 className="mt-6 font-heading text-2xl font-semibold">Problem</h2>
+          <h2 className="mt-6 font-heading text-xl font-semibold">Problem</h2>
           <p className="mt-2 text-muted-foreground">{project.problem}</p>
-          <h2 className="mt-6 font-heading text-2xl font-semibold">Role</h2>
+          <h2 className="mt-6 font-heading text-xl font-semibold">Role</h2>
           <p className="mt-2 text-muted-foreground">{project.role}</p>
         </div>
-        <div>
-          <h2 className="font-heading text-2xl font-semibold">Key features</h2>
+        <div className="surface p-6">
+          <h2 className="font-heading text-xl font-semibold">Key features</h2>
           <ul className="mt-2 list-disc space-y-1 pl-5 text-muted-foreground">
             {project.features.map((f) => (
               <li key={f}>{f}</li>
@@ -69,7 +82,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           </ul>
           {project.results && (
             <>
-              <h2 className="mt-6 font-heading text-2xl font-semibold">Results</h2>
+              <h2 className="mt-6 font-heading text-xl font-semibold">Results</h2>
               <ul className="mt-2 list-disc space-y-1 pl-5 text-muted-foreground">
                 {project.results.map((r) => (
                   <li key={r}>{r}</li>

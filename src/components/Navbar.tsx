@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState, MouseEvent } from "react";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
@@ -8,18 +9,21 @@ import { profile } from "@/data/profile";
 import { useActiveSection } from "@/hooks/useActiveSection";
 
 const links = [
-  { href: "#about", id: "about", label: "About" },
-  { href: "#projects", id: "projects", label: "Projects" },
-  { href: "#skills", id: "skills", label: "Skills" },
-  { href: "#experience", id: "experience", label: "Journey" },
-  { href: "#contact", id: "contact", label: "Contact" },
+  { href: "/#about", id: "about", label: "About" },
+  { href: "/#education", id: "education", label: "Education" },
+  { href: "/#projects", id: "projects", label: "Projects" },
+  { href: "/#skills", id: "skills", label: "Skills" },
+  { href: "/#experience", id: "experience", label: "Journey" },
+  { href: "/#certifications", id: "certifications", label: "Certificates" },
+  { href: "/#contact", id: "contact", label: "Contact" },
 ];
 
 export function Navbar() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const sectionIds = useMemo(() => links.map((l) => l.id), []);
-  const active = useActiveSection(sectionIds);
+  const { active, highlight } = useActiveSection(sectionIds);
 
   useEffect(() => {
     // Check initial scroll position immediately on mount / page refresh
@@ -31,7 +35,10 @@ export function Navbar() {
   }, []);
 
   const handleScrollTo = (e: MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    // On case-study pages, let the Link navigate back to the home anchor.
+    if (pathname !== "/") return;
     e.preventDefault();
+    highlight(targetId);
     const element = document.getElementById(targetId);
     if (!element) return;
 
@@ -50,7 +57,7 @@ export function Navbar() {
     <header
       className={`fixed top-0 z-50 w-full transition-all duration-300 ${
         scrolled
-          ? "bg-background/80 backdrop-blur-xl border-b border-border shadow-sm shadow-black/5"
+          ? "border-b border-border bg-background/90 backdrop-blur-md"
           : "bg-transparent"
       }`}
     >
@@ -60,12 +67,16 @@ export function Navbar() {
           onClick={(e) => {
             if (window.location.pathname === "/") {
               e.preventDefault();
+              const hero = document.getElementById("hero");
               if (window.__lenis) {
-                window.__lenis.scrollTo(0, { duration: 1.2 });
+                window.__lenis.scrollTo(hero ?? 0, { duration: 1.2 });
+              } else if (hero) {
+                hero.scrollIntoView({ behavior: "smooth", block: "start" });
               } else {
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }
             }
+            // On case-study pages the Link navigates home, which lands on the hero.
           }}
           className="font-heading text-lg font-bold tracking-tight"
         >
@@ -87,7 +98,7 @@ export function Navbar() {
                 {isActive && (
                   <motion.span
                     layoutId="navbar-active-pill"
-                    className="absolute inset-0 -z-10 rounded-lg bg-muted/80 backdrop-blur-sm"
+                    className="absolute inset-0 -z-10 rounded-lg bg-muted"
                     transition={{ type: "spring", stiffness: 350, damping: 30 }}
                   />
                 )}

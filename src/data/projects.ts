@@ -1,10 +1,11 @@
-// TODO: replace with your actual projects, screenshots, and real links/metrics.
+export type ProjectPlatform = "iOS" | "Android" | "Cross-platform";
+
 export type Project = {
   slug: string;
   title: string;
   tagline: string;
   description: string;
-  platform: "Android";
+  platform: ProjectPlatform;
   tech: string[];
   images: string[];
   video?: string;
@@ -25,7 +26,7 @@ export const projects: Project[] = [
       "A habit building and wellness Android application designed to help users stay disciplined with NoFap streaks, build consistent habits, and track physical activities such as walking and running.",
     platform: "Android",
     tech: ["Flutter", "Dart", "Local Storage", "Activity Tracking"],
-    images: ["/aura-home.jpg"],
+    images: ["/assets/screenshots/aura-ss/screenshots/cropped/splash.jpg"],
     links: {},
     role: "Personal project · Flutter developer",
     problem:
@@ -36,7 +37,10 @@ export const projects: Project[] = [
       "Physical activity tracking for walks and runs",
       "Minimalist dark UI designed for intentional, focused use",
     ],
-    results: ["Built for mindfulness & active lifestyle", "Focus: streak algorithms, activity stats & animations"],
+    results: [
+      "Built for mindfulness & active lifestyle",
+      "Focus: streak algorithms, activity stats & animations",
+    ],
     featured: true,
   },
   {
@@ -47,7 +51,11 @@ export const projects: Project[] = [
       "A bus seat reservation Android app developed for learning purposes as a course project for 'Software Project Management'. It focuses on project lifecycle management, requirement gathering, and clean mobile UI implementation for reserving bus seats.",
     platform: "Android",
     tech: ["Flutter", "Dart", "UI Design", "SPM Coursework"],
-    images: ["/seatnix-splash.jpg"],
+    images: [
+      "/assets/screenshots/seatnix-ss/cropped/splash.jpg",
+      "/assets/screenshots/seatnix-ss/cropped/home.jpg",
+      "/assets/screenshots/seatnix-ss/cropped/seat.jpg",
+    ],
     links: {},
     role: "University Project · Software Project Management",
     problem:
@@ -61,6 +69,32 @@ export const projects: Project[] = [
     results: [
       "Academic project for Software Project Management course",
       "Practiced project documentation, UI prototyping, and sprint deliverables",
+    ],
+    featured: true,
+  },
+  {
+    slug: "presence",
+    title: "Presence",
+    tagline: "QR-based classroom attendance for verified students.",
+    description:
+      "Presence is a classroom attendance app that replaces paper roll calls with short-lived QR check-ins. A teacher starts a session, students scan it with their own verified account, and attendance is recorded instantly with the session, time and device details.",
+    platform: "Android",
+    tech: ["Flutter", "Dart", "Appwrite", "QR scanning", "Camera"],
+    images: ["/assets/screenshots/presence-ss/cropped/splash.jpg"],
+    links: {},
+    role: "Personal project · Flutter developer",
+    problem:
+      "Manual roll calls waste class time and are easy to fake. Presence makes check-ins quick and trustworthy: every scan is tied to a real student account, limited to one per session, and protected by rotating QR codes so a shared screenshot cannot be reused.",
+    features: [
+      "Scan a teacher's active class QR to mark attendance",
+      "Verified student accounts bound to each check-in",
+      "One check-in per session with rotating QR protection",
+      "Academic profile stored on-device (department, roll no., batch)",
+      "Simple Home / Profile / Settings navigation",
+    ],
+    results: [
+      "Built a real attendance flow with Appwrite authentication",
+      "Practised camera/QR integration and verified, one-per-session check-ins",
     ],
     featured: true,
   },

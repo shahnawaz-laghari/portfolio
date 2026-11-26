@@ -1,4 +1,5 @@
 // TODO: adjust levels/labels to reflect your real comfort with each tool.
+// "comfortable" = I can build with it today · "learning" = I'm actively studying it.
 export type SkillLevel = "comfortable" | "learning";
 export type Skill = { name: string; icon: string; level: SkillLevel };
 export type SkillGroup = { title: string; skills: Skill[] };
@@ -18,7 +19,6 @@ export const skillGroups: SkillGroup[] = [
     title: "Frameworks",
     skills: [
       { name: "Flutter", icon: "SiFlutter", level: "learning" },
-      { name: "Android", icon: "SiAndroid", level: "learning" },
       { name: "React", icon: "SiReact", level: "learning" },
       { name: "Next.js", icon: "SiNextdotjs", level: "learning" },
       { name: "Tailwind CSS", icon: "SiTailwindcss", level: "learning" },
@@ -38,5 +38,5 @@ export const skillGroups: SkillGroup[] = [
   },
 ];
 
-// Flat list for marquee
+/** Flat list for the marquee. */
 export const allSkills: Skill[] = skillGroups.flatMap((g) => g.skills);

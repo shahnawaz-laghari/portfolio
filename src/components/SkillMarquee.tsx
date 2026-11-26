@@ -18,8 +18,8 @@ export function SkillMarquee() {
               key={`${s.name}-${i}`}
               className="flex shrink-0 items-center gap-3 text-muted-foreground transition-colors hover:text-foreground"
             >
-              {Icon && <span aria-hidden="true"><Icon className="h-6 w-6 text-foreground/80" /></span>}
-              <span className="text-sm font-medium tracking-wide">{s.name}</span>
+              {Icon && <span aria-hidden="true"><Icon className="h-5 w-5 text-muted-foreground" /></span>}
+              <span className="text-sm text-muted-foreground">{s.name}</span>
             </div>
           );
         })}

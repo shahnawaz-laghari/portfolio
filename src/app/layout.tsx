@@ -7,11 +7,11 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Toaster } from "@/components/ui/sonner";
 import { profile } from "@/data/profile";
+import { siteUrl } from "@/lib/site";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const spaceGrotesk = Space_Grotesk({ variable: "--font-space-grotesk", subsets: ["latin"] });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com";
 const defaultTitle = `${profile.name} — ${profile.title}`;
 
 export const metadata: Metadata = {
@@ -22,11 +22,13 @@ export const metadata: Metadata = {
   },
   description: profile.bio,
   keywords: [
+    "mobile app developer",
     "Android developer",
+    "iOS developer",
     "Flutter developer",
+    "web developer",
     "Next.js developer",
     "React developer",
-    "Frontend developer",
     "Junior developer portfolio",
     profile.name,
   ],

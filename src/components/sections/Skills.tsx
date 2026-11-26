@@ -12,31 +12,31 @@ const levelLabels: Record<string, string> = {
 
 export function Skills() {
   return (
-    <section id="skills" className="scroll-mt-24 py-24">
+    <section id="skills" className="scroll-mt-24">
       <div className="mx-auto max-w-[1200px] px-6">
         <motion.h2
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="font-heading text-3xl font-bold md:text-4xl"
+          className="mt-2 font-heading text-3xl font-semibold tracking-tight"
         >
           Skills
         </motion.h2>
-        <p className="mt-2 text-muted-foreground">An honest snapshot of my toolkit as a junior developer.</p>
+        <p className="mt-2 text-sm text-muted-foreground">Tools I use today, and a few I&apos;m learning.</p>
         <div className="mt-8">
           <SkillMarquee />
         </div>
         <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {skillGroups.map((g) => (
-            <div key={g.title} className="rounded-2xl border border-border bg-card p-6">
-              <h3 className="font-semibold">{g.title}</h3>
+            <div key={g.title} className="surface p-5">
+              <h3 className="text-sm font-semibold">{g.title}</h3>
               <div className="mt-4 flex flex-col gap-2">
                 {g.skills.map((s) => {
                   const Icon = skillIconMap[s.icon];
                   return (
                     <div
                       key={s.name}
-                      className="flex items-center justify-between rounded-lg bg-muted px-3 py-1.5"
+                      className="flex items-center justify-between rounded-md bg-muted/60 px-3 py-1.5"
                     >
                       <span className="inline-flex items-center gap-2 text-sm">
                         {Icon && (

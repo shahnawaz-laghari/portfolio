@@ -24,7 +24,7 @@ export const experiences: Experience[] = [
     bullets: [
       "Completed structured Flutter/Dart coursework and built several practice apps.",
       "Learned Firebase (Auth, Firestore, Storage) and app architecture basics.",
-      "Published my first utility app on the Google Play Store.",
+      "Built and tested several Flutter apps (Aura, SeatNix, Presence); none published to a store yet.",
     ],
   },
   {

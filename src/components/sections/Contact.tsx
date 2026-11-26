@@ -2,34 +2,28 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { toast } from "sonner";
-import { Mail } from "lucide-react";
+import { CheckCircle2, Mail } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { profile } from "@/data/profile";
+import { contactSchema, type ContactValues } from "@/lib/contact-schema";
+import { LottiePlayer } from "@/components/LottiePlayer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 
-const schema = z.object({
-  name: z.string().min(2, "Name is required"),
-  email: z.string().email("Invalid email"),
-  message: z.string().min(10, "Message too short"),
-});
-
-type FormValues = z.infer<typeof schema>;
-
 export function Contact() {
   const [loading, setLoading] = useState(false);
+  const [sent, setSent] = useState(false);
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<FormValues>({ resolver: zodResolver(schema) });
+  } = useForm<ContactValues>({ resolver: zodResolver(contactSchema) });
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (data: ContactValues) => {
     setLoading(true);
     try {
       const res = await fetch("/api/contact", {
@@ -42,6 +36,7 @@ export function Contact() {
         throw new Error(result.error || "Failed to send message");
       }
       toast.success("Message sent! I will get back to you soon.");
+      setSent(true);
       reset();
     } catch (err: unknown) {
       const errorMessage =
@@ -53,17 +48,17 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="scroll-mt-24 py-24">
+    <section id="contact" className="scroll-mt-24 pb-24 md:pb-32">
       <div className="mx-auto max-w-[1200px] px-6">
         <div className="grid gap-10 lg:grid-cols-2 lg:items-stretch">
           {/* Left column: Text, Email, Socials distributed to match form height */}
           <div className="flex flex-col justify-between py-2 sm:py-4">
             <div>
-              <h2 className="font-heading text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
-                Get in touch
+              <h2 className="mt-2 font-heading text-3xl font-semibold tracking-tight">
+                Contact
               </h2>
-              <p className="mt-3 text-lg text-muted-foreground">
-                Have a project in mind? Let&apos;s talk.
+              <p className="mt-2 text-sm text-muted-foreground">
+                Open to internships, junior roles and freelance work.
               </p>
             </div>
 
@@ -102,8 +97,31 @@ export function Contact() {
           </div>
 
           {/* Right column: Form Card */}
-          <div className="flex flex-col justify-between rounded-2xl border border-border/60 bg-card/60 p-6 shadow-xl backdrop-blur-sm sm:p-8">
-            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
+          <div className="surface flex flex-col justify-between p-6 sm:p-8">
+            {sent && (
+              <div
+                role="status"
+                className="mb-5 flex items-center gap-3 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-3"
+              >
+                <LottiePlayer
+                  src="/lottie/success-check.json"
+                  className="h-12 w-12 shrink-0"
+                  loop={false}
+                  label="Message sent successfully"
+                />
+                <div>
+                  <p className="flex items-center gap-1.5 text-sm font-semibold text-emerald-700 dark:text-emerald-300">
+                    <CheckCircle2 className="h-4 w-4" /> Message delivered
+                  </p>
+                  <p className="text-xs text-muted-foreground">Thanks for reaching out — I&apos;ll reply soon.</p>
+                </div>
+              </div>
+            )}
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              onInput={() => sent && setSent(false)}
+              className="flex flex-col gap-5"
+            >
               <div>
                 <Label htmlFor="name" className="mb-2 block text-sm font-medium">
                   Name

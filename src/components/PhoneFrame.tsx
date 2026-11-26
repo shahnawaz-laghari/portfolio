@@ -6,24 +6,38 @@ export function PhoneFrame({
   alt,
   className = "",
   variant = "default",
+  fit = "cover",
 }: {
   src?: string;
   alt?: string;
   className?: string;
   variant?: "aura" | "seatnix" | "default";
+  fit?: "cover" | "contain";
 }) {
-  const isAura = variant === "aura";
-  const isSeatnix = variant === "seatnix";
+  // A real screenshot always wins; the branded CSS mockups are only a fallback
+  // for places that intentionally have no image (e.g. the hero visual).
+  const showMockup = !src && (variant === "aura" || variant === "seatnix");
+  const isAura = variant === "aura" && showMockup;
+  const isSeatnix = variant === "seatnix" && showMockup;
+  const isSvg = src?.toLowerCase().endsWith(".svg") ?? false;
+  const isLocalAsset = src?.startsWith("/assets/") ?? false;
+  const hasScreenshot = Boolean(src);
 
   return (
     <div
-      className={`relative h-[480px] w-[240px] overflow-hidden rounded-[2.9rem] border border-white/15 bg-neutral-950 p-2.5 shadow-2xl ${className}`}
+      className={`relative w-[240px] overflow-hidden rounded-[2.9rem] border border-white/15 bg-neutral-950 p-2.5 shadow-2xl ${
+        hasScreenshot ? "" : "h-[480px]"
+      } ${className}`}
     >
       {/* side buttons */}
       <span className="absolute -right-[3px] top-28 h-8 w-[3px] rounded-r bg-zinc-700" />
       <span className="absolute -left-[3px] top-32 h-12 w-[3px] rounded-l bg-zinc-700" />
 
-      <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-[2.2rem] bg-[#171310]">
+      <div
+        className={`relative flex w-full items-center justify-center overflow-hidden rounded-[2.2rem] bg-[#171310] ${
+          hasScreenshot ? "aspect-[703/1600]" : "h-full"
+        }`}
+      >
         {isAura && (
           <div className="flex h-full w-full flex-col items-center justify-center bg-[radial-gradient(circle_at_center,rgba(234,122,61,0.16),transparent_28%),linear-gradient(180deg,#1a130f_0%,#0d0d12_42%,#080b10_100%)]">
             <div className="relative">
@@ -73,7 +87,14 @@ export function PhoneFrame({
           <div className="flex h-full w-full items-center justify-center bg-gradient-to-b from-zinc-900 to-black">
             {src ? (
               <div className="relative h-full w-full">
-                <Image src={src} alt={alt ?? "Project preview"} fill className="object-cover" sizes="240px" />
+                <Image
+                  src={src}
+                  alt={alt ?? "Project preview"}
+                  fill
+                  className={fit === "contain" ? "object-contain" : "object-cover"}
+                  sizes="240px"
+                  unoptimized={isSvg || isLocalAsset}
+                />
               </div>
             ) : (
               <div className="flex h-full w-full items-center justify-center bg-zinc-800 text-zinc-500">
@@ -83,8 +104,10 @@ export function PhoneFrame({
           </div>
         )}
 
-        {/* punch-hole camera */}
-        <span className="absolute left-1/2 top-3 z-10 h-3 w-3 -translate-x-1/2 rounded-full bg-black ring-1 ring-zinc-700" />
+        {/* Real screenshots already contain their own camera/status area. */}
+        {!hasScreenshot && (
+          <span className="absolute left-1/2 top-3 z-10 h-3 w-3 -translate-x-1/2 rounded-full bg-black ring-1 ring-zinc-700" />
+        )}
       </div>
     </div>
   );
@@ -103,7 +126,14 @@ export function LaptopFrame({
     <div className={`relative mx-auto w-[260px] sm:w-[280px] ${className}`}>
       <div className="overflow-hidden rounded-[18px] border border-zinc-700 bg-zinc-950 p-2 shadow-2xl shadow-zinc-950/30">
         <div className="relative aspect-[16/10] overflow-hidden rounded-[12px] bg-black">
-          <Image src={src} alt={alt} fill className="object-cover" sizes="280px" />
+          <Image
+            src={src}
+            alt={alt}
+            fill
+            className="object-cover"
+            sizes="280px"
+            unoptimized={src.toLowerCase().endsWith(".svg")}
+          />
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.18),transparent_35%)]" />
         </div>
       </div>
